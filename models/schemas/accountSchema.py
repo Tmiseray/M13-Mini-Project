@@ -7,6 +7,7 @@ class AccountSchema(ma.Schema):
     password = fields.String(required=True)
     role = fields.String(required=False)
     accountId = fields.Integer(required=True)
+    isActive = fields.Boolean(dump_only=True)
 
 account_schema = AccountSchema()
 accounts_schema = AccountSchema(many=True)

@@ -12,6 +12,7 @@ class Account(Base):
     password: Mapped[str] = mapped_column(db.String(255), nullable=False)
     role: Mapped[str] = mapped_column(db.String(20), nullable=False)
     accountId: Mapped[int] = mapped_column(db.Integer, nullable=False)
+    isActive: Mapped[bool] = mapped_column(db.Boolean, default=True)
 
 
     admin: Mapped['Admin'] = db.relationship(
@@ -42,3 +43,11 @@ class Account(Base):
                 bcrypt.gensalt()
             )
         super().__init__(**kwargs)
+
+    def deactivate(self):
+        self.isActive = False
+        db.session.commit()
+
+    def activate(self):
+        self.isActive = True
+        db.session.commit()

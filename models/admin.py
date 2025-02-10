@@ -11,3 +11,12 @@ class Admin(Base):
     email: Mapped[str] = mapped_column(db.String(100), nullable=False)
     phone: Mapped[str] = mapped_column(db.String(20), nullable=False)
     role: Mapped[str] = mapped_column(db.String(10), nullable=False, default='admin')
+    isActive: Mapped[bool] = mapped_column(db.Boolean, default=True)
+
+    def deactivate(self):
+        self.isActive = False
+        db.session.commit()
+
+    def activate(self):
+        self.isActive = True
+        db.session.commit()

@@ -12,6 +12,16 @@ class Product(Base):
     createdAt: Mapped[datetime.date] = mapped_column(db.Date, nullable=False, default=datetime.datetime.now(datetime.timezone.utc))
     updatedBy: Mapped[int] = mapped_column(db.ForeignKey('Admins.id'), nullable=True)
     updatedAt: Mapped[datetime.date] = mapped_column(db.Date, nullable=False, default=datetime.datetime.now(datetime.timezone.utc), onupdate=datetime.datetime.now(datetime.timezone.utc))
+    isActive: Mapped[bool] = mapped_column(db.Boolean, default=True)
 
     creator: Mapped['Admin'] = db.relationship(primaryjoin='Product.createdBy == Admin.id')
     updater: Mapped['Admin'] = db.relationship(primaryjoin='Product.updatedBy == Admin.id')
+
+
+    def deactivate(self):
+        self.isActive = False
+        db.session.commit()
+
+    def activate(self):
+        self.isActive = True
+        db.session.commit()
