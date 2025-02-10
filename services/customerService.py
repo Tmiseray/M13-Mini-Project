@@ -1,16 +1,15 @@
 from sqlalchemy.orm import Session
 from database import db
 from models.customer import Customer
-from models.order import Order
 from circuitbreaker import circuit
-from sqlalchemy import select, func
+from sqlalchemy import select
 
 
 def fallback_function(customer):
     return None
 
 
-# Save New Customer Data
+# Save/Create New Customer Data
 @circuit(failure_threshold=1, recovery_timeout=10, fallback_function=fallback_function)
 def save(customer_data):
     try:
@@ -28,18 +27,40 @@ def save(customer_data):
     except Exception as e:
         raise e
     
+# Read Customer Data
+def read(id):
+    query = select(Customer).where(id==id)
+    customer = db.session.execute(query).scalar_one_or_none()
+    if customer == None:
+        raise Exception('No customer found with that ID')
+    return customer
+
 # Update Customer Data
-def update(id):
-    pass
+def update(customer_data):
+    query = select(Customer).where(id==customer_data['id'])
+    customer = db.session.execute(query).scalar_one_or_none()
+    if customer == None:
+        raise Exception('No customer found with that ID')
+    
+    customer.name = (customer_data['name'], customer.name)
+    customer.email = (customer_data['email'], customer.email)
+    customer.phone = (customer_data['phone'], customer.phone)
+    db.session.commit()
+    return customer
 
-
-# Delete Customer
-
-
-
+# Delete/Deactivate Customer
+def deactivate(customer_data):
+    query = select(Customer).where(id==customer_data['id'])
+    customer = db.session.execute(query).scalar_one_or_none()
+    if customer == None:
+        raise Exception('No customer found with that ID')
+    if customer.isActive == False:
+        raise Exception('Customer is already deactivated')
+    customer.deactivate()
+    return customer
 
 # Get All Customers
-def find_customers():
+def find_all():
     query = select(Customer)
     customers = db.session.execute(query).scalars().all()
     return customers

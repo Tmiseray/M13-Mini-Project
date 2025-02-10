@@ -19,9 +19,16 @@ class Order(Base):
     product: Mapped['Product'] = db.relationship(primaryjoin='Order.productId == Product.id')
     
 
+@event.listens_for(Order, 'before_commit')
+def total_price(mapper, connection, target):
+    if target.productId:
+        product = db.session.get(Product, target.productId)
+        if product:
+            target.totalPrice = round((target.quantity * product.price), 2)
+
 @event.listens_for(Order, 'before_update')
 def update_total_price(mapper, connection, target):
     if target.productId:
         product = db.session.get(Product, target.productId)
         if product:
-            target.totalPrice = target.quantity * product.price
+            target.totalPrice = round((target.quantity * product.price), 2)

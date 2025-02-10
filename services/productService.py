@@ -1,0 +1,66 @@
+from sqlalchemy.orm import Session
+from database import db
+from models.product import Product
+from circuitbreaker import circuit
+from sqlalchemy import select
+
+
+def fallback_function(product):
+    return None
+
+
+# Save/Create New Product Data
+@circuit(failure_threshold=1, recovery_timeout=10, fallback_function=fallback_function)
+def save(product_data):
+    try:
+        if product_data['name'] == "Failure":
+            raise Exception('Failure condition triggered')
+        
+        with Session(db.engine) as session:
+            with session.begin():
+                new_product = Product(name=product_data['name'], price=product_data['price'], createdBy=product_data['createdBy'])
+                session.add(new_product)
+                session.commit()
+            session.refresh(new_product)
+            return new_product
+        
+    except Exception as e:
+        raise e
+    
+# Read Product Data
+def read(id):
+    query = select(Product).where(id==id)
+    product = db.session.execute(query).scalar_one_or_none()
+    if product == None:
+        raise Exception('No product found with that ID')
+    return product
+
+# Update Product Data
+def update(product_data):
+    query = select(Product).where(id==product_data['id'])
+    product = db.session.execute(query).scalar_one_or_none()
+    if product == None:
+        raise Exception('No product found with that ID')
+    
+    product.name = (product_data['name'], product.name)
+    product.price = (product_data['price'], product.price)
+    product.updatedBy = (product_data['updatedBy'], product.updatedBy)
+    db.session.commit()
+    return product
+
+# Delete/Deactivate Product
+def deactivate(product_data):
+    query = select(Product).where(id==product_data['id'])
+    product = db.session.execute(query).scalar_one_or_none()
+    if product == None:
+        raise Exception('No product found with that ID')
+    if product.isActive == False:
+        raise Exception('product is already deactivated')
+    product.deactivate()
+    return product
+
+# Get All products
+def find_all():
+    query = select(Product)
+    products = db.session.execute(query).scalars().all()
+    return products
