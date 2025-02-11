@@ -42,10 +42,10 @@ def save(user_data):
         if user is not None:
             with Session(db.engine) as session:
                 with session.begin():
-                    new_user = Account(username=user_data['username'],
-                                    password=user_data['password'],
-                                    role=user.role,
-                                    accountId=accountId)
+                    new_user = Account(username = user_data['username'],
+                                    password = user_data['password'],
+                                    role = user.role,
+                                    accountId = accountId)
                     session.add(new_user)
                     session.commit()
                 session.refresh(new_user)
@@ -56,7 +56,7 @@ def save(user_data):
     
 # Read
 def read(id):
-    query = select(Account).where(id==id)
+    query = select(Account).where(Account.id==id)
     account = db.session.execute(query).scalar_one_or_none()
     if account is None:
         raise Exception('No account found with that ID')
@@ -64,7 +64,7 @@ def read(id):
 
 # Update
 def update(account_data):
-    query = select(Account).where(id==int(account_data['id']))
+    query = select(Account).where(Account.id==account_data['id'])
     account = db.session.execute(query).scalar_one_or_none()
     if account is None:
         raise Exception('No account found with that ID')
@@ -75,7 +75,7 @@ def update(account_data):
             bcrypt.gensalt()
         )
 
-    account.username = (account_data['username'], account.username)
+    account.username = account_data.get('username', account.username)
     account.password = (hashed_pw, account.password)
     account.accountId = account.accountId
     db.session.commit()
@@ -83,13 +83,24 @@ def update(account_data):
 
 # Delete/Deactivate Account
 def deactivate(account_data):
-    query = select(Account).where(id==account_data['id'])
+    query = select(Account).where(Account.id==account_data['id'])
     account = db.session.execute(query).scalar_one_or_none()
     if account is None:
         raise Exception('No account found with that ID')
-    if account.isActive == False:
+    if not account.isActive:
         raise Exception('Account is already deactivated')
     account.deactivate()
+    return account
+
+# Activate Account
+def activate(account_data):
+    query = select(Account).where(Account.id==account_data['id'])
+    account = db.session.execute(query).scalar_one_or_none()
+    if account is None:
+        raise Exception('No account found with that ID')
+    if account.isActive:
+        raise Exception('Account is already activated')
+    account.activate()
     return account
 
 # Get All Accounts

@@ -1,6 +1,6 @@
 from services import adminService
 from flask import jsonify, request
-from models.schemas.adminSchema import admin_schema, admins_schema
+from models.schemas.userSchema import admin_schema, admins_schema
 from marshmallow import ValidationError
 from caching import cache
 from utils.util import token_required, role_required

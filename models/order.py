@@ -1,8 +1,7 @@
 from database import db, Base
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import event
-from models.product import Product
-from models.customer import Customer
+# from models.customer import Customer
 import datetime
 
 class Order(Base):
@@ -15,19 +14,15 @@ class Order(Base):
     orderPlaced: Mapped[datetime.datetime] = mapped_column(db.Date, nullable=False, default=datetime.datetime.now(datetime.timezone.utc))
     updatedOn: Mapped[datetime.datetime] = mapped_column(db.Date, nullable=False, default=datetime.datetime.now(datetime.timezone.utc), onupdate=datetime.datetime.now(datetime.timezone.utc))
 
-    customer: Mapped['Customer'] = db.relationship(back_populates='orders')
+
+    # Relationship
+    customer: Mapped['User'] = db.relationship('User', back_populates='orders')
     product: Mapped['Product'] = db.relationship(primaryjoin='Order.productId == Product.id')
     
 
-@event.listens_for(Order, 'before_commit')
-def total_price(mapper, connection, target):
-    if target.productId:
-        product = db.session.get(Product, target.productId)
-        if product:
-            target.totalPrice = round((target.quantity * product.price), 2)
-
 @event.listens_for(Order, 'before_update')
 def update_total_price(mapper, connection, target):
+    from models.product import Product
     if target.productId:
         product = db.session.get(Product, target.productId)
         if product:

@@ -1,8 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column
-from models.admin import Admin
-from models.customer import Customer
+from models.user import User
 from database import db, Base
-from sqlalchemy import and_
 import bcrypt
 
 class Account(Base):
@@ -11,28 +9,14 @@ class Account(Base):
     username: Mapped[str] = mapped_column(db.String(255), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(db.String(255), nullable=False)
     role: Mapped[str] = mapped_column(db.String(20), nullable=False)
-    accountId: Mapped[int] = mapped_column(db.Integer, nullable=False)
+    userId: Mapped[int] = mapped_column(db.Integer, db.ForeignKey('Users.id'), nullable=False)
     isActive: Mapped[bool] = mapped_column(db.Boolean, default=True)
 
-
-    admin: Mapped['Admin'] = db.relationship(
-        'Admin',
-        primaryjoin=and_(
-            accountId == Admin.id,
-            role == "admin"
-            ),
-        foreign_keys=[accountId],
-        uselist=False,
-        )
-
-    customer: Mapped['Customer'] = db.relationship(
-        'Customer',
-        primaryjoin=and_(
-            accountId == Customer.id,
-            role == "customer"
-            ),
-        foreign_keys=[accountId],
-        uselist=False,
+    user: Mapped['User'] = db.relationship(
+        'User',
+        primaryjoin=(userId == User.id),
+        foreign_keys=[userId],
+        uselist=False
         )
     
     def __init__(self, **kwargs):

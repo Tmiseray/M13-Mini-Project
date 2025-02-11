@@ -33,7 +33,7 @@ def save(product_data):
     
 # Read Product Data
 def read(id):
-    query = select(Product).where(id==id)
+    query = select(Product).where(Product.id==id)
     product = db.session.execute(query).scalar_one_or_none()
     if product is None:
         raise Exception('No product found with that ID')
@@ -41,29 +41,40 @@ def read(id):
 
 # Update Product Data
 def update(product_data):
-    query = select(Product).where(id==product_data['id'])
+    query = select(Product).where(Product.id==product_data['id'])
     product = db.session.execute(query).scalar_one_or_none()
     if product is None:
         raise Exception('No product found with that ID')
     
-    product.name = (product_data['name'], product.name)
-    product.price = (product_data['price'], product.price)
-    product.updatedBy = (product_data['updatedBy'], product.updatedBy)
+    product.name = product_data.get('name', product.name)
+    product.price = product_data.get('price', product.price)
+    product.updatedBy = product_data.get('updatedBy', product.updatedBy)
     db.session.commit()
     return product
 
 # Delete/Deactivate Product
 def deactivate(product_data):
-    query = select(Product).where(id==product_data['id'])
+    query = select(Product).where(Product.id==product_data['id'])
     product = db.session.execute(query).scalar_one_or_none()
     if product is None:
         raise Exception('No product found with that ID')
-    if product.isActive == False:
+    if not product.isActive:
         raise Exception('product is already deactivated')
     product.deactivate()
     return product
 
-# Get All products
+# Activate Product
+def activate(product_data):
+    query = select(Product).where(Product.id==product_data['id'])
+    product = db.session.execute(query).scalar_one_or_none()
+    if product is None:
+        raise Exception('No product found with that ID')
+    if product.isActive:
+        raise Exception('product is already activated')
+    product.activate()
+    return product
+
+# Get All Products
 def find_all():
     query = select(Product)
     products = db.session.execute(query).scalars().all()

@@ -10,7 +10,7 @@ class ProductSchema(ma.Schema):
     createdAt = fields.Date(dump_only=True)
     updatedBy = fields.Integer(allow_none=True)
     updatedAt = fields.Date(dump_only=True)
-    isActive = fields.Boolean(dump_only=True)
+    isActive = fields.Boolean(dump_only=True, default=True)
 
 
 product_schema = ProductSchema()

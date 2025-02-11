@@ -1,66 +1,84 @@
 from sqlalchemy.orm import Session
 from database import db
-from models.admin import Admin
+from models.user import User
 from circuitbreaker import circuit
 from sqlalchemy import select
 
 
-def fallback_function(admin):
+def fallback_function(user):
     return None
 
 
-# Save/Create New admin Data
+# Save/Create New User Data
 @circuit(failure_threshold=1, recovery_timeout=10, fallback_function=fallback_function)
-def save(admin_data):
+def save(user_data):
     try:
-        if admin_data['name'] == 'Failure':
+        if user_data['name'] == 'Failure':
             raise Exception('Failure condition triggered')
         
         with Session(db.engine) as session:
             with session.begin():
-                new_admin = Admin(name=admin_data['name'], email=admin_data['email'], phone=admin_data['phone'])
-                session.add(new_admin)
+                new_user = User(
+                    name = user_data['name'], 
+                    email = user_data['email'], 
+                    phone = user_data['phone']
+                    )
+                session.add(new_user)
                 session.commit()
-            session.refresh(new_admin)
-            return new_admin
+            session.refresh(new_user)
+            return new_user
         
     except Exception as e:
         raise e
     
-# Read admin Data
+# Read User Data
 def read(id):
-    query = select(Admin).where(id==id)
-    admin = db.session.execute(query).scalar_one_or_none()
-    if admin is None:
-        raise Exception('No admin found with that ID')
-    return admin
+    query = select(User).where(User.id==id)
+    user = db.session.execute(query).scalar_one_or_none()
+    if user is None:
+        raise Exception('No user found with that ID')
+    return user
 
-# Update admin Data
-def update(admin_data):
-    query = select(Admin).where(id==admin_data['id'])
-    admin = db.session.execute(query).scalar_one_or_none()
-    if admin is None:
-        raise Exception('No admin found with that ID')
+# Update User Data
+def update(user_data):
+    query = select(User).where(User.id==user_data['id'])
+    user = db.session.execute(query).scalar_one_or_none()
+    if user is None:
+        raise Exception('No user found with that ID')
     
-    admin.name = (admin_data['name'], admin.name)
-    admin.email = (admin_data['email'], admin.email)
-    admin.phone = (admin_data['phone'], admin.phone)
+    user.name = user_data.get('name', user.name)
+    user.email = user_data.get('email', user.email)
+    user.phone = user_data.get('phone', user.phone)
     db.session.commit()
-    return admin
+    return user
 
-# Delete/Deactivate admin
-def deactivate(admin_data):
-    query = select(Admin).where(id==admin_data['id'])
-    admin = db.session.execute(query).scalar_one_or_none()
-    if admin is None:
-        raise Exception('No admin found with that ID')
-    if admin.isActive == False:
-        raise Exception('Admin is already deactivated')
-    admin.deactivate()
-    return admin
+# Delete/Deactivate User
+def deactivate(user_data):
+    query = select(User).where(User.id==user_data['id'])
+    user = db.session.execute(query).scalar_one_or_none()
+    if user is None:
+        raise Exception('No user found with that ID')
+    if not user.isActive:
+        raise Exception('User is already deactivated')
+    user.deactivate()
+    return user
 
-# Get All admins
+# Activate User
+def activate(user_data):
+    query = select(User).where(User.id==user_data['id'])
+    user = db.session.execute(query).scalar_one_or_none()
+    if user is None:
+        raise Exception('No user found with that ID')
+    if user.isActive:
+        raise Exception('User is already activated')
+    user.activate()
+    return user
+
+# Get All Users
 def find_all():
-    query = select(Admin)
-    admins = db.session.execute(query).scalars().all()
-    return admins
+    query = select(User)
+    users = db.session.execute(query).scalars().all()
+    return users
+
+def find_all_admins():
+    query = select(User).where(User.role=)

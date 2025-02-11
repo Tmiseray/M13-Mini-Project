@@ -33,7 +33,7 @@ def save(customer_data):
     
 # Read Customer Data
 def read(id):
-    query = select(Customer).where(id==id)
+    query = select(Customer).where(Customer.id==id)
     customer = db.session.execute(query).scalar_one_or_none()
     if customer is None:
         raise Exception('No customer found with that ID')
@@ -41,26 +41,40 @@ def read(id):
 
 # Update Customer Data
 def update(customer_data):
-    query = select(Customer).where(id==customer_data['id'])
+    query = select(Customer).where(Customer.id==customer_data['id'])
     customer = db.session.execute(query).scalar_one_or_none()
     if customer is None:
         raise Exception('No customer found with that ID')
     
-    customer.name = (customer_data['name'], customer.name)
-    customer.email = (customer_data['email'], customer.email)
-    customer.phone = (customer_data['phone'], customer.phone)
+    customer.name = customer_data.get('name', customer.name)
+    customer.email = customer_data.get('email', customer.email)
+    customer.phone = customer_data.get('phone', customer.phone)
+
     db.session.commit()
     return customer
 
 # Delete/Deactivate Customer
 def deactivate(customer_data):
-    query = select(Customer).where(id==customer_data['id'])
+    query = select(Customer).where(Customer.id==customer_data['id'])
     customer = db.session.execute(query).scalar_one_or_none()
     if customer is None:
         raise Exception('No customer found with that ID')
-    if customer.isActive == False:
+    if not customer.isActive:
         raise Exception('Customer is already deactivated')
     customer.deactivate()
+    return customer
+
+# Activate Customer
+def activate(customer_data):
+    query = select(Customer).where(Customer.id == customer_data['id'])
+    customer = db.session.execute(query).scalar_one_or_none()
+
+    if customer is None:
+        raise Exception('No customer found with that ID')
+    if customer.isActive:
+        raise Exception('Customer is already activated')
+
+    customer.activate()
     return customer
 
 # Get All Customers

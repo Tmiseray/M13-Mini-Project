@@ -1,5 +1,5 @@
-from sqlalchemy.orm import Mapped, mapped_column
-from models.admin import Admin
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+# from models.admin import Admin
 from database import db, Base
 import datetime
 
@@ -14,8 +14,10 @@ class Product(Base):
     updatedAt: Mapped[datetime.date] = mapped_column(db.Date, nullable=False, default=datetime.datetime.now(datetime.timezone.utc), onupdate=datetime.datetime.now(datetime.timezone.utc))
     isActive: Mapped[bool] = mapped_column(db.Boolean, default=True)
 
-    creator: Mapped['Admin'] = db.relationship(primaryjoin='Product.createdBy == Admin.id')
-    updater: Mapped['Admin'] = db.relationship(primaryjoin='Product.updatedBy == Admin.id')
+    # Relationship
+    admin: Mapped['User'] = db.relationship('User', back_populates='products')
+    creator: Mapped['User'] = db.relationship(primaryjoin='Product.createdBy == User.id')
+    updater: Mapped['User'] = db.relationship(primaryjoin='Product.updatedBy == User.id')
 
 
     def deactivate(self):
