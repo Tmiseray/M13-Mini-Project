@@ -40,7 +40,7 @@ def save(order_data):
 def read(id):
     query = select(Order).where(id==id)
     order = db.session.execute(query).scalar_one_or_none()
-    if order == None:
+    if order is None:
         raise Exception('No order found with that ID')
     return order
 
@@ -48,7 +48,7 @@ def read(id):
 def update(order_data):
     query = select(Order).where(id==order_data['id'])
     order = db.session.execute(query).scalar_one_or_none()
-    if order == None:
+    if order is None:
         raise Exception('No order found with that ID')
     
     order.customerId = order.customerId
@@ -61,7 +61,7 @@ def update(order_data):
 def delete(order_data):
     query = select(Order).where(id==order_data['id'])
     order = db.session.execute(query).scalar_one_or_none()
-    if order == None:
+    if order is None:
         raise Exception('No order found with that ID')
     db.session.delete(order)
     db.session.commit()

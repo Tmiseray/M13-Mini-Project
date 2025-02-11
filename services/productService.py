@@ -18,7 +18,11 @@ def save(product_data):
         
         with Session(db.engine) as session:
             with session.begin():
-                new_product = Product(name=product_data['name'], price=product_data['price'], createdBy=product_data['createdBy'])
+                new_product = Product(
+                    name = product_data['name'], 
+                    price = product_data['price'], 
+                    createdBy = product_data['createdBy']
+                    )
                 session.add(new_product)
                 session.commit()
             session.refresh(new_product)
@@ -31,7 +35,7 @@ def save(product_data):
 def read(id):
     query = select(Product).where(id==id)
     product = db.session.execute(query).scalar_one_or_none()
-    if product == None:
+    if product is None:
         raise Exception('No product found with that ID')
     return product
 
@@ -39,7 +43,7 @@ def read(id):
 def update(product_data):
     query = select(Product).where(id==product_data['id'])
     product = db.session.execute(query).scalar_one_or_none()
-    if product == None:
+    if product is None:
         raise Exception('No product found with that ID')
     
     product.name = (product_data['name'], product.name)
@@ -52,7 +56,7 @@ def update(product_data):
 def deactivate(product_data):
     query = select(Product).where(id==product_data['id'])
     product = db.session.execute(query).scalar_one_or_none()
-    if product == None:
+    if product is None:
         raise Exception('No product found with that ID')
     if product.isActive == False:
         raise Exception('product is already deactivated')

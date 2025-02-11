@@ -31,7 +31,7 @@ def save(admin_data):
 def read(id):
     query = select(Admin).where(id==id)
     admin = db.session.execute(query).scalar_one_or_none()
-    if admin == None:
+    if admin is None:
         raise Exception('No admin found with that ID')
     return admin
 
@@ -39,7 +39,7 @@ def read(id):
 def update(admin_data):
     query = select(Admin).where(id==admin_data['id'])
     admin = db.session.execute(query).scalar_one_or_none()
-    if admin == None:
+    if admin is None:
         raise Exception('No admin found with that ID')
     
     admin.name = (admin_data['name'], admin.name)
@@ -52,7 +52,7 @@ def update(admin_data):
 def deactivate(admin_data):
     query = select(Admin).where(id==admin_data['id'])
     admin = db.session.execute(query).scalar_one_or_none()
-    if admin == None:
+    if admin is None:
         raise Exception('No admin found with that ID')
     if admin.isActive == False:
         raise Exception('Admin is already deactivated')

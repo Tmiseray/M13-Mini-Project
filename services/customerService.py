@@ -18,7 +18,11 @@ def save(customer_data):
         
         with Session(db.engine) as session:
             with session.begin():
-                new_customer = Customer(name=customer_data['name'], email=customer_data['email'], phone=customer_data['phone'])
+                new_customer = Customer(
+                    name = customer_data['name'], 
+                    email = customer_data['email'], 
+                    phone = customer_data['phone']
+                    )
                 session.add(new_customer)
                 session.commit()
             session.refresh(new_customer)
@@ -31,7 +35,7 @@ def save(customer_data):
 def read(id):
     query = select(Customer).where(id==id)
     customer = db.session.execute(query).scalar_one_or_none()
-    if customer == None:
+    if customer is None:
         raise Exception('No customer found with that ID')
     return customer
 
@@ -39,7 +43,7 @@ def read(id):
 def update(customer_data):
     query = select(Customer).where(id==customer_data['id'])
     customer = db.session.execute(query).scalar_one_or_none()
-    if customer == None:
+    if customer is None:
         raise Exception('No customer found with that ID')
     
     customer.name = (customer_data['name'], customer.name)
@@ -52,7 +56,7 @@ def update(customer_data):
 def deactivate(customer_data):
     query = select(Customer).where(id==customer_data['id'])
     customer = db.session.execute(query).scalar_one_or_none()
-    if customer == None:
+    if customer is None:
         raise Exception('No customer found with that ID')
     if customer.isActive == False:
         raise Exception('Customer is already deactivated')
