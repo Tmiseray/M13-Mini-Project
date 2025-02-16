@@ -36,7 +36,7 @@ class ProductServiceTests(unittest.TestCase):
         # Arrange
         faker = Faker()
         mock_product = Product(
-            name = faker.random_object_name(),
+            name = faker.name(),
             price = faker.random_number(),
             createdBy = faker.random_int()
         )
@@ -196,7 +196,7 @@ class ProductServiceTests(unittest.TestCase):
             name = faker.name(),
             price = faker.random_number(),
             createdBy = faker.random_int(),
-            isActive = True
+            isActive = False
         )
 
         # Mock Database Response
@@ -221,7 +221,7 @@ class ProductServiceTests(unittest.TestCase):
             name = faker.name(),
             price = faker.random_number(),
             createdBy = faker.random_int(),
-            isActive = True
+            isActive = False
         )
 
         # Mock Database Response
@@ -309,3 +309,7 @@ class ProductServiceTests(unittest.TestCase):
 
         # Assert
         self.assertEqual(result, expected_products)
+
+
+if __name__ == '__main__':
+    unittest.main()

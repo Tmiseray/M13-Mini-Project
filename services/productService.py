@@ -59,7 +59,7 @@ def deactivate(product_data):
     if product is None:
         raise Exception('No product found with that ID')
     if not product.isActive:
-        raise Exception('product is already deactivated')
+        raise Exception('Product is already deactivated')
     product.deactivate()
     return product
 
@@ -70,7 +70,7 @@ def activate(product_data):
     if product is None:
         raise Exception('No product found with that ID')
     if product.isActive:
-        raise Exception('product is already activated')
+        raise Exception('Product is already activated')
     product.activate()
     return product
 
