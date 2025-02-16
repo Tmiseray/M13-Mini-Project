@@ -7,7 +7,7 @@ import datetime
 class Order(Base):
     __tablename__ = 'Orders'
     id: Mapped[int] = mapped_column(primary_key=True)
-    customerId: Mapped[int] = mapped_column(db.ForeignKey('Customers.id'), nullable=False)
+    customerId: Mapped[int] = mapped_column(db.ForeignKey('Users.id'), nullable=False)
     productId: Mapped[int] = mapped_column(db.ForeignKey('Products.id'), nullable=False)
     quantity: Mapped[int] = mapped_column(db.Integer, nullable=False)
     totalPrice: Mapped[float] = mapped_column(db.Float, nullable=False)

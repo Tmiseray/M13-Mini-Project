@@ -16,14 +16,14 @@ swagger_blueprint = get_swaggerui_blueprint(
     }
 )
 
-from models.user import Admin
-from models.customer import Customer
+from models.user import User
+# from models.customer import Customer
 from models.product import Product
 from models.order import Order
 from models.account import Account
 
-from routes.adminBP import admin_blueprint
-from routes.customerBP import customer_blueprint
+from routes.userBP import user_blueprint
+# from routes.customerBP import customer_blueprint
 from routes.productBP import product_blueprint
 from routes.orderBP import order_blueprint
 from routes.accountBP import account_blueprint
@@ -42,8 +42,8 @@ def create_app(config_name):
 
 
 def blueprint_config(app):
-    app.register_blueprint(admin_blueprint, url_prefix='/api/admins')
-    app.register_blueprint(customer_blueprint, url_prefix='/api/customers')
+    app.register_blueprint(user_blueprint, url_prefix='/api/users')
+    # app.register_blueprint(customer_blueprint, url_prefix='/api/customers')
     app.register_blueprint(product_blueprint, url_prefix='/api/products')
     app.register_blueprint(order_blueprint, url_prefix='/api/orders')
     app.register_blueprint(account_blueprint, url_prefix='/api/accounts')
@@ -54,8 +54,8 @@ def configure_rate_limit():
     if current_app.config.get('TESTING'):
         return
     
-    limiter.limit('21/day')(admin_blueprint)
-    limiter.limit('13/hour')(customer_blueprint)
+    # limiter.limit('21/day')(admin_blueprint)
+    limiter.limit('13/hour')(user_blueprint)
     limiter.limit('13/minute')(product_blueprint)
     limiter.limit('7/minute')(order_blueprint)
     limiter.limit('21/hour')(account_blueprint)

@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from database import db
 from models.account import Account
+from services import userService
 from circuitbreaker import circuit
 from sqlalchemy import select
 from utils.util import encode_token
@@ -38,7 +39,7 @@ def save(user_data):
         if user_data['username'] == "Failure":
             raise Exception('Failure condition triggered')
         accountId = user_data['accountId']
-        user = read(accountId)
+        user = userService.read(accountId)
         if user is not None:
             with Session(db.engine) as session:
                 with session.begin():

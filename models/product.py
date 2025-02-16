@@ -8,9 +8,9 @@ class Product(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(db.String(100), nullable=False)
     price: Mapped[float] = mapped_column(db.Float, nullable=False)
-    createdBy: Mapped[int] = mapped_column(db.ForeignKey('Admins.id'), nullable=False)
+    createdBy: Mapped[int] = mapped_column(db.ForeignKey('Users.id'), nullable=False)
     createdAt: Mapped[datetime.date] = mapped_column(db.Date, nullable=False, default=datetime.datetime.now(datetime.timezone.utc))
-    updatedBy: Mapped[int] = mapped_column(db.ForeignKey('Admins.id'), nullable=True)
+    updatedBy: Mapped[int] = mapped_column(db.ForeignKey('Users.id'), nullable=True)
     updatedAt: Mapped[datetime.date] = mapped_column(db.Date, nullable=False, default=datetime.datetime.now(datetime.timezone.utc), onupdate=datetime.datetime.now(datetime.timezone.utc))
     isActive: Mapped[bool] = mapped_column(db.Boolean, default=True)
 
