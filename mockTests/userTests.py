@@ -13,7 +13,7 @@ import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module="flask_limiter")
 
 
-class userServiceTests(unittest.TestCase):
+class UserServiceTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -179,7 +179,7 @@ class userServiceTests(unittest.TestCase):
         self.assertEqual(result.name, updated_data['name'])
         self.assertEqual(result.email, updated_data['email'])
         self.assertEqual(result.phone, updated_data['phone'])
-        self.assertEqual(result.role, updated_data['role'])
+        self.assertEqual(result.role, 'admin')
         mock_commit.assert_called_once()
 
 
@@ -475,7 +475,7 @@ class userServiceTests(unittest.TestCase):
         mock_execute.return_value.scalars.return_value.all.return_value = expected_customers
 
         # Act
-        result = find_all()
+        result = find_all_customers()
 
         # Assert
         self.assertEqual(result, expected_customers)

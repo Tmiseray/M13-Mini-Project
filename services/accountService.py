@@ -78,7 +78,7 @@ def update(account_data):
 
     account.username = account_data.get('username', account.username)
     account.password = (hashed_pw, account.password)
-    account.accountId = account.accountId
+    account.userId = account.userId
     db.session.commit()
     return account
 

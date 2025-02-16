@@ -13,8 +13,8 @@ class User(Base):
     isActive: Mapped[bool] = mapped_column(db.Boolean, default=True)
 
     # Relationships
-    orders: Mapped[List['Order']] = db.relationship('Order', back_populates='customer')
-    products: Mapped[List['Product']] = db.relationship('Product', back_populates='admin')
+    orders: Mapped[List['Order']] = db.relationship('Order', back_populates='customer',  foreign_keys='Order.customerId')
+    products: Mapped[List['Product']] = db.relationship('Product', back_populates='creator', foreign_keys='Product.createdBy')
 
 
     def deactivate(self):

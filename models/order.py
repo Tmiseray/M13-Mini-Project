@@ -16,8 +16,8 @@ class Order(Base):
 
 
     # Relationship
-    customer: Mapped['User'] = db.relationship('User', back_populates='orders')
-    product: Mapped['Product'] = db.relationship(primaryjoin='Order.productId == Product.id')
+    customer: Mapped['User'] = db.relationship('User', back_populates='orders', foreign_keys=[customerId])
+    product: Mapped['Product'] = db.relationship('Product', back_populates='orders', foreign_keys=[productId])
     
 
 @event.listens_for(Order, 'before_update')

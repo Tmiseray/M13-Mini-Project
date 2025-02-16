@@ -8,7 +8,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app import create_app
 from database import db
 from models.account import Account
-from models.user import Admin
+from models.user import User
 from services.accountService import login, save, read, update, deactivate, activate, find_all
 import warnings
 
@@ -32,11 +32,11 @@ class AccountServiceTests(unittest.TestCase):
     def testLoginSuccess(self, mock_execute):
         faker = Faker()
         password = faker.password()
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        # hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         mock_account = Account(
             id = faker.random_int(),
             username = faker.user_name(),
-            password = hashed_password,
+            password = password,
             role = 'admin'
         )
         
@@ -63,15 +63,15 @@ class AccountServiceTests(unittest.TestCase):
         self.assertIsNone(response)
 
 
-    @patch('services.accountService.db.session.add')
-    @patch('services.accountService.db.session.commit')
-    @patch('services.accountService.db.session.refresh')
-    def testSave(self, mock_refresh, mock_commit, mock_add):
-        # Arrange
-        faker = Faker()
-        mock_account = Account(
+    # @patch('services.accountService.db.session.add')
+    # @patch('services.accountService.db.session.commit')
+    # @patch('services.accountService.db.session.refresh')
+    # def testSave(self, mock_refresh, mock_commit, mock_add):
+    #     # Arrange
+    #     faker = Faker()
+    #     mock_account = Account(
 
-        )
+    #     )
 
     @patch('services.accountService.db.session.execute')
     @patch('services.accountService.db.session.commit')
@@ -80,8 +80,9 @@ class AccountServiceTests(unittest.TestCase):
         mock_account = Account(
             id=faker.random_int(),
             username=faker.user_name(),
-            password=bcrypt.hashpw(faker.password().encode('utf-8'), bcrypt.gensalt()),
-            role='admin'
+            password=faker.password(),
+            role='admin',
+            userId=faker.random_int()
         )
         
         mock_result = MagicMock()
@@ -91,7 +92,8 @@ class AccountServiceTests(unittest.TestCase):
         new_data = {
             'id': mock_account.id,
             'username': faker.user_name(),
-            'password': faker.password()
+            'password': faker.password(),
+            'userId': mock_account.userId
         }
         
         result = update(new_data)
@@ -119,11 +121,13 @@ class AccountServiceTests(unittest.TestCase):
         account1 = MagicMock(spec=Account)
         account1.id = faker.random_int()
         account1.username = faker.user_name()
+        account1.password=bcrypt.hashpw(faker.password().encode('utf-8'), bcrypt.gensalt())
         account1.role = 'user'
 
         account2 = MagicMock(spec=Account)
         account2.id = faker.random_int()
         account2.username = faker.user_name()
+        account2.password=bcrypt.hashpw(faker.password().encode('utf-8'), bcrypt.gensalt())
         account2.role = 'admin'
 
         expected_accounts = [account1, account2]

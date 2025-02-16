@@ -15,9 +15,9 @@ class Product(Base):
     isActive: Mapped[bool] = mapped_column(db.Boolean, default=True)
 
     # Relationship
-    admin: Mapped['User'] = db.relationship('User', back_populates='products')
-    creator: Mapped['User'] = db.relationship(primaryjoin='Product.createdBy == User.id')
-    updater: Mapped['User'] = db.relationship(primaryjoin='Product.updatedBy == User.id')
+    creator: Mapped['User'] = db.relationship('User', foreign_keys=[createdBy])
+    updater: Mapped['User'] = db.relationship('User', foreign_keys=[updatedBy])
+    orders: Mapped['Order'] = db.relationship('Order', back_populates='product')
 
 
     def deactivate(self):
