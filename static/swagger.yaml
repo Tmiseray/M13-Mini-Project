@@ -1,0 +1,799 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: 'E-Commerce Management System API'
+  description: 'API for the E-Commerce Management System'
+host: '127.0.0.1:5000'
+schemes:
+  - 'http'
+consumes:
+  - 'application/json'
+produces:
+  - 'application/json'
+securityDefinitions:
+  bearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  /api/users:
+    post:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+    post:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+  /api/users/<int:id>:
+    post:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+    put:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+    get:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+  /api/users/admins:
+    get:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+  /api/users/customers:
+    get:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+  /api/accounts:
+    post:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+    post:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+  /api/accounts/<int:id>:
+    post:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+    put:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+    get:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+  /api/products:
+    post:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+    post:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+  /api/products/<int:id>:
+    post:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+    put:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+    get:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+  /api/orders:
+    post:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+    post:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+  /api/orders/<int:id>:
+    post:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+    put:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+    get:
+      tags:
+        - users
+      summary: ''
+      description: ''
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: ''
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        200:
+          description: ''
+          schema:
+            $ref: '#/definitions/UserResponse'
+          examples:
+            application/json:
+              value:
+                name:
+                email:
+                phone:
+                role:
+                status:
+                message:
+        400:
+          description: ''
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status:
+                message:
+definitions: {}
