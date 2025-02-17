@@ -38,56 +38,86 @@ paths:
             application/json:
               value:
                 name: 'John Doe'
-                email:
-                phone:
-                role:
-                status:
-                message:
+                email: 'john.doe@example.com'
+                phone: '1234567890'
+                role: 'user'
+                status: 'success'
+                message: 'User created successfully'
         400:
-          description: ''
+          description: 'Invalid input'
           schema:
             $ref: '#/definitions/Error'
           examples:
             application/json:
               value:
-                status:
-                message:
-    post:
+                status: 'error'
+                message: 'Invalid input'
+    get:
       tags:
         - users
-      summary: ''
-      description: ''
-      parameters:
-        - in: 'body'
-          name: 'body'
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/User'
+      summary: 'Get all users'
+      description: 'Retrieves all users from the database'
       responses:
         200:
-          description: ''
+          description: 'List of users from database'
           schema:
-            $ref: '#/definitions/UserResponse'
+            type: 'array'
+            items:
+              $ref: '#/definitions/UserList'
           examples:
             application/json:
               value:
-                name:
-                email:
-                phone:
-                role:
-                status:
-                message:
-        400:
-          description: ''
+                - id: 1
+                  name: 'John Doe'
+                  email: 'john.doe@example.com'
+                  phone: '1234567890'
+                  role: 'user'
+                - id: 2
+                  name: 'Jane Doe'
+                  email: 'jane.doe@example.com'
+                  phone: '1234567890'
+                  role: 'user'
+                - status: success
+                - message: 'Retrieval of all users successful'
+        401:
+          description: 'Unauthorized access'
           schema:
             $ref: '#/definitions/Error'
           examples:
             application/json:
               value:
-                status:
-                message:
-  /api/users/<int:id>:
+                status: 'error'
+                message: 'Unauthorized access | Authentication required'
+        403:
+          description: 'Forbidden access'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Forbidden | Permission not allowed'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Resource not found | Page not found'
+        500:
+          description: 'Internal server error'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Internal server error'
+      security:
+        - bearerAuth: []
+  /api/users/{id}:
     post:
       tags:
         - users
@@ -199,18 +229,14 @@ paths:
         - users
       summary: ''
       description: ''
-      parameters:
-        - in: 'body'
-          name: 'body'
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/User'
       responses:
         200:
           description: ''
+          description: 'List of users from database'
           schema:
-            $ref: '#/definitions/UserResponse'
+            type: 'array'
+            items:
+              $ref: '#/definitions/UserList'
           examples:
             application/json:
               value:
@@ -220,33 +246,57 @@ paths:
                 role:
                 status:
                 message:
-        400:
-          description: ''
+        401:
+          description: 'Unauthorized access'
           schema:
             $ref: '#/definitions/Error'
           examples:
             application/json:
               value:
-                status:
-                message:
+                status: 'error'
+                message: 'Unauthorized access | Authentication required'
+        403:
+          description: 'Forbidden access'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Forbidden | Permission not allowed'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Resource not found | Page not found'
+        500:
+          description: 'Internal server error'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Internal server error'
+      security:
+        - bearerAuth: []
   /api/users/customers:
     get:
       tags:
         - users
       summary: ''
       description: ''
-      parameters:
-        - in: 'body'
-          name: 'body'
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/User'
       responses:
         200:
-          description: ''
+          description: 'List of users from database'
           schema:
-            $ref: '#/definitions/UserResponse'
+            type: 'array'
+            items:
+              $ref: '#/definitions/UserList'
           examples:
             application/json:
               value:
@@ -256,15 +306,44 @@ paths:
                 role:
                 status:
                 message:
-        400:
-          description: ''
+        401:
+          description: 'Unauthorized access'
           schema:
             $ref: '#/definitions/Error'
           examples:
             application/json:
               value:
-                status:
-                message:
+                status: 'error'
+                message: 'Unauthorized access | Authentication required'
+        403:
+          description: 'Forbidden access'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Forbidden | Permission not allowed'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Resource not found | Page not found'
+        500:
+          description: 'Internal server error'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Internal server error'
+      security:
+        - bearerAuth: []
   /api/accounts:
     post:
       tags:
@@ -301,23 +380,18 @@ paths:
               value:
                 status:
                 message:
-    post:
+    get:
       tags:
         - users
       summary: ''
       description: ''
-      parameters:
-        - in: 'body'
-          name: 'body'
-          description: ''
-          required: true
-          schema:
-            $ref: '#/definitions/User'
       responses:
         200:
-          description: ''
+          description: 'List of users from database'
           schema:
-            $ref: '#/definitions/UserResponse'
+            type: 'array'
+            items:
+              $ref: '#/definitions/UserList'
           examples:
             application/json:
               value:
@@ -327,16 +401,45 @@ paths:
                 role:
                 status:
                 message:
-        400:
-          description: ''
+        401:
+          description: 'Unauthorized access'
           schema:
             $ref: '#/definitions/Error'
           examples:
             application/json:
               value:
-                status:
-                message:
-  /api/accounts/<int:id>:
+                status: 'error'
+                message: 'Unauthorized access | Authentication required'
+        403:
+          description: 'Forbidden access'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Forbidden | Permission not allowed'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Resource not found | Page not found'
+        500:
+          description: 'Internal server error'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Internal server error'
+      security:
+        - bearerAuth: []
+  /api/accounts/{id}:
     post:
       tags:
         - users
@@ -478,7 +581,7 @@ paths:
               value:
                 status:
                 message:
-    post:
+    get:
       tags:
         - users
       summary: ''
@@ -504,16 +607,25 @@ paths:
                 role:
                 status:
                 message:
-        400:
-          description: ''
+        404:
+          description: 'Not found'
           schema:
             $ref: '#/definitions/Error'
           examples:
             application/json:
               value:
-                status:
-                message:
-  /api/products/<int:id>:
+                status: 'error'
+                message: 'Resource not found | Page not found'
+        500:
+          description: 'Internal server error'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Internal server error'
+  /api/products/{id}:
     post:
       tags:
         - users
@@ -655,7 +767,7 @@ paths:
               value:
                 status:
                 message:
-    post:
+    get:
       tags:
         - users
       summary: ''
@@ -681,16 +793,45 @@ paths:
                 role:
                 status:
                 message:
-        400:
-          description: ''
+        401:
+          description: 'Unauthorized access'
           schema:
             $ref: '#/definitions/Error'
           examples:
             application/json:
               value:
-                status:
-                message:
-  /api/orders/<int:id>:
+                status: 'error'
+                message: 'Unauthorized access | Authentication required'
+        403:
+          description: 'Forbidden access'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Forbidden | Permission not allowed'
+        404:
+          description: 'Not found'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Resource not found | Page not found'
+        500:
+          description: 'Internal server error'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              value:
+                status: 'error'
+                message: 'Internal server error'
+      security:
+        - bearerAuth: []
+  /api/orders/{id}:
     post:
       tags:
         - users

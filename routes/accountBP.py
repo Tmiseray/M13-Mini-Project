@@ -1,11 +1,14 @@
 from flask import Blueprint
-from controllers.accountController import save, read, update, deactivate, find_all
+from controllers.accountController import login, save, read, update, deactivate, find_all
 
 
 account_blueprint = Blueprint('account_bp', __name__)
 
 # Save/Create New Account
 account_blueprint.route('/', methods=['POST'])(save)
+
+# Login
+account_blueprint.route('/login', methods=['POST'])(login)
 
 # Read Account
 account_blueprint.route('/<int:id>', methods=['GET'])(read)
