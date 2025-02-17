@@ -20,24 +20,24 @@ paths:
     post:
       tags:
         - users
-      summary: ''
-      description: ''
+      summary: 'New user creation'
+      description: 'Create a new admin or customer user'
       parameters:
         - in: 'body'
           name: 'body'
-          description: ''
+          description: 'User object that needs to be added to the database'
           required: true
           schema:
             $ref: '#/definitions/User'
       responses:
         200:
-          description: ''
+          description: 'User created successfully'
           schema:
             $ref: '#/definitions/UserResponse'
           examples:
             application/json:
               value:
-                name:
+                name: 'John Doe'
                 email:
                 phone:
                 role:
