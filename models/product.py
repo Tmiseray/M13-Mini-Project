@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-# from models.admin import Admin
 from database import db, Base
 import datetime
 

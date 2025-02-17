@@ -14,7 +14,7 @@ def fallback_function(order):
 @circuit(failure_threshold=1, recovery_timeout=10, fallback_function=fallback_function)
 def save(order_data):
     try:
-        if order_data['customerId'] == 'Failure':
+        if not order_data['customerId']:
             raise Exception('Failure condition triggered')
         
         with Session(db.engine) as session:

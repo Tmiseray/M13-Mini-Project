@@ -63,16 +63,6 @@ class AccountServiceTests(unittest.TestCase):
         self.assertIsNone(response)
 
 
-    # @patch('services.accountService.db.session.add')
-    # @patch('services.accountService.db.session.commit')
-    # @patch('services.accountService.db.session.refresh')
-    # def testSave(self, mock_refresh, mock_commit, mock_add):
-    #     # Arrange
-    #     faker = Faker()
-    #     mock_account = Account(
-
-    #     )
-
     @patch('services.accountService.db.session.execute')
     @patch('services.accountService.db.session.commit')
     def testUpdateAccount(self, mock_commit, mock_execute):
