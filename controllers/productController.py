@@ -91,7 +91,6 @@ def deactivate():
 
 # Get All products
 @token_required
-# @role_required('admin')
 @cache.cached(timeout=60)
 def find_all():
     products = productService.find_all()

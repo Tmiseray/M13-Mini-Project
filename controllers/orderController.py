@@ -8,7 +8,6 @@ from utils.util import token_required, role_required
     
 # Save/Create New Order
 @token_required
-# @role_required('admin')
 def save():
     try:
         order_data = order_schema.load(request.json)
